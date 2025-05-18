@@ -1,7 +1,7 @@
 const MongoHelper = require('../helpers/mongo-helper.js')
 const LoadUserByEmailRepository = require('./load-user-by-email-repository.js')
 const { MissingParamError } = require('../../utils/errors')
-let db
+let userModel
 
 const makeSut = () => {
   return new LoadUserByEmailRepository()
@@ -10,11 +10,11 @@ const makeSut = () => {
 describe('LoadUserByEmail Repository', () => {
   beforeAll(async () => {
     await MongoHelper.connect(process.env.MONGO_URL)
-    db = await MongoHelper.getDb()
+    userModel = await MongoHelper.getCollection('users')
   })
 
   beforeEach(async () => {
-    await db.collection('users').deleteMany
+    await userModel.deleteMany
   })
 
   afterAll(async () => {
@@ -29,14 +29,14 @@ describe('LoadUserByEmail Repository', () => {
 
   test('Should return user if user is found', async () => {
     const sut = makeSut()
-    const insertedResult = await db.collection('users').insertOne({
+    const insertedResult = await userModel.insertOne({
       email: 'valid_email@mail.com',
       name: 'any_name',
       age: 50,
       state: 'any_state',
       password: 'hashed_password'
     })
-    const fakeUser = await db.collection('users').findOne({ _id: insertedResult.insertedId })
+    const fakeUser = await userModel.findOne({ _id: insertedResult.insertedId })
     const user = await sut.load('valid_email@mail.com')
     expect(user).toEqual({
       _id: fakeUser._id,
