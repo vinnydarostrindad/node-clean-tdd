@@ -1,15 +1,14 @@
 const { MongoClient } = require('mongodb')
 
 module.exports = {
-  async connect (url, dbName) {
+  async connect (url) {
     this.url = url
-    this.dbName = dbName
     this.client = await MongoClient.connect(url)
-    this.db = this.client.db(dbName)
+    this.db = this.client.db()
   },
-  // connect: async function (url, dbName) {
+  // connect: async function (url) {
   //   client = await MongoClient.connect(url)
-  //   db = client.db(dbName)
+  //   db = client.db()
   // }
 
   async disconnect () {
@@ -20,7 +19,7 @@ module.exports = {
 
   async getCollection (name) {
     if (!this.client) {
-      await this.connect(this.url, this.dbName)
+      await this.connect(this.url)
     }
     return this.db.collection(name)
   }
