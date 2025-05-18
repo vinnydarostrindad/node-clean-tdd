@@ -1,0 +1,6 @@
+services:
+  mongo:
+    image: mongo:7.0.8-jammy
+    container_name: mongodb
+    ports:
+      - "27017:27017"
