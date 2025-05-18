@@ -1,15 +1,13 @@
 const MongoHelper = require('../helpers/mongo-helper.js')
 const { MissingParamError } = require('../../utils/errors')
 const UpdateAcessTokenRepository = require('./update-acess-token-repository.js')
-let userModel
+let userModel, fakeUserId
 
 const makeSut = () => {
   return new UpdateAcessTokenRepository()
 }
 
 describe('UpdateAcessToken Repository', () => {
-  let fakeUserId
-
   beforeAll(async () => {
     await MongoHelper.connect(process.env.MONGO_URL)
     userModel = await MongoHelper.getCollection('users')
