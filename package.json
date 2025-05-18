@@ -2,8 +2,9 @@
   "name": "clean-tdd",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/main/index.js",
   "scripts": {
+    "start": "node src/main/index.js",
     "test": "jest --noStackTrace --passWithNoTests",
     "test:unit": "npm test -- --watch -c jest-unit-config.js",
     "test:integration": "npm test -- --watch -c jest-integration-config.js",
@@ -27,6 +28,7 @@
   "dependencies": {
     "@shelf/jest-mongodb": "^5.1.0",
     "bcrypt": "^6.0.0",
+    "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.16.0",
     "validator": "^13.15.0"
