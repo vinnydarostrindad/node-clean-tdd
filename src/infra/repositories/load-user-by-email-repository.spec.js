@@ -14,7 +14,7 @@ describe('LoadUserByEmail Repository', () => {
   })
 
   beforeEach(async () => {
-    await userModel.deleteMany
+    await userModel.deleteMany()
   })
 
   afterAll(async () => {
